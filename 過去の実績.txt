@@ -57,35 +57,3 @@ SAS サーバのトラブルシュート：メタデータとかいうのが壊�
 一倉定
 
 
-Option Explicit
-
-Sub sampleSF()
-  Dim loginxml As String
-  '接続用のxml
-  loginxml = _
-"<?xml version=""1.0"" encoding=""UTF-8""?><env:Envelope  " & _
-"  xmlns:env=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" " & _
-"  xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">  " & _
-" <env:Body>  " & _
-" <m:login xmlns:m=""urn:partner.soap.sforce.com"" xmlns:sobj=""urn:sobject.partner.soap.sforce.com"">   " & _
-"  <m:username>sample@sample.user</m:username>   " & _
-"  <m:password>samplepassword</m:password>  " & _
-" </m:login> " & _
-" </env:Body>  " & _
-"</env:Envelope> "
-
-Dim http As Object
-'WinHttp.WinHttpRequest か MSXML2.XMLHTTP を使う
-'Set http = CreateObject("WinHttp.WinHttpRequest.5.1")   
-Set http = CreateObject("MSXML2.XMLHTTP")
-http.Open "POST", "https://login.salesforce.com/services/Soap/u/38.0", False
-http.SetRequestHeader "Content-Type", "text/xml; charset=utf-8"
-http.SetRequestHeader "SOAPAction", "login"
-http.Send loginxml
-
-' 結果出力
-MsgBox http.responseText
-
-'XMLをパースする処理を作成する。
-・・・・・
-End Sub
